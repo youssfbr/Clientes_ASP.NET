@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Clientes.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +10,7 @@ namespace Clientes.API.Controllers
     [Route("api/[controller]" + "s")]
     public class ClienteController : ControllerBase
     {
-        public ClienteController() { }       
-
-        [HttpGet]
-        public IEnumerable<Cliente> Get()
-        {
-            return new Cliente[] 
+        private IEnumerable<Cliente> _cliente = new Cliente[] 
             {
                 new Cliente() 
                 {
@@ -34,7 +30,19 @@ namespace Clientes.API.Controllers
                     DataCadastro = DateTime.Now,
                     CPF = "12345563"
                 }
-            };            
+            };       
+        public ClienteController() { }         
+
+        [HttpGet]
+        public IEnumerable<Cliente> Get()
+        {
+            return _cliente;      
+        }
+
+        [HttpGet("{id}")]
+        public IEnumerable<Cliente> GetById(int id)
+        {
+            return _cliente.Where(cliente => cliente.Id == id);      
         }
     }
 }

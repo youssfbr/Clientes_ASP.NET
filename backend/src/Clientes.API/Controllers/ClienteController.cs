@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Clientes.Domain.Models;
+using Clientes.Persistence.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Clientes.API.Controllers
@@ -9,40 +10,22 @@ namespace Clientes.API.Controllers
     [ApiController]
     [Route("api/[controller]" + "s")]
     public class ClienteController : ControllerBase
-    {
-        private IEnumerable<Cliente> _cliente = new Cliente[] 
-            {
-                new Cliente() 
-                {
-                    Id = 1,
-                    Nome = "Alisson Youssf",
-                    Email = "youssfbr@gmail.com",
-                    Telefone = "+55 (85) 9.8705.9184",
-                    DataCadastro = DateTime.Now,
-                    CPF = "12345567"
-                },
-                new Cliente() 
-                {
-                    Id = 2,
-                    Nome = "Link da Silva Sauro",
-                    Email = "linlin@gmail.com",
-                    Telefone = "+55 (85) 9.8128-6510",
-                    DataCadastro = DateTime.Now,
-                    CPF = "12345563"
-                }
-            };       
-        public ClienteController() { }         
+    {        
+        private readonly DataContext _context;
+        public ClienteController(DataContext context) { 
+            _context = context;
+        }                     
 
         [HttpGet]
         public IEnumerable<Cliente> Get()
         {
-            return _cliente;      
+            return _context.Clientes;             
         }
 
         [HttpGet("{id}")]
-        public IEnumerable<Cliente> GetById(int id)
+        public Cliente GetById(int id)
         {
-            return _cliente.Where(cliente => cliente.Id == id);      
+            return _context.Clientes.FirstOrDefault(cliente => cliente.Id == id);
         }
     }
 }

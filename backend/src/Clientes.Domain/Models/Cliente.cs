@@ -12,7 +12,7 @@ namespace Clientes.Domain.Models
         public string Email { get; set; }
         public string Telefone { get; set; }
         public string CPF { get; set; }
-        public DateTime DataNascimento { get; set; }
-        public DateTime DataCadastro { get; set; }
+        public DateTime? DataNascimento { get; set; }
+        public DateTime? DataCadastro { get; set; }
     }
 }

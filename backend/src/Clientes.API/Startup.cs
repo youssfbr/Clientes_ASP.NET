@@ -1,17 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Clientes.Persistence.Data;
+using Clientes.Application;
+using Clientes.Application.Interfaces;
+using Clientes.Persistence;
+using Clientes.Persistence.Context;
+using Clientes.Persistence.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace Clientes.API
@@ -31,7 +28,18 @@ namespace Clientes.API
             services.AddDbContext<DataContext>(
                 context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
             );
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = 
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    );
+
+            services.AddScoped<IGeralPersist, GeralPersist>();
+            services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IClientePersist, ClientePersist>();
+            services.AddScoped<IBairroService, BairroService>();
+             services.AddScoped<IBairroPersist, BairroPersist>();
+            
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Clientes.API", Version = "v1" });

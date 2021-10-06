@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,5 +15,7 @@ namespace Clientes.Domain.Models
         public string CPF { get; set; }
         public DateTime? DataNascimento { get; set; }
         public DateTime? DataCadastro { get; set; }
+        public string Observacao { get; set; }
+        public IEnumerable<Telefone> Telefones { get; set; }
     }
 }

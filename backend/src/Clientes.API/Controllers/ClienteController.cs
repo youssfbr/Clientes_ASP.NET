@@ -17,7 +17,7 @@ namespace Clientes.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {           
            try
            {
@@ -90,7 +90,7 @@ namespace Clientes.API.Controllers
             try
             {
                 var cliente = await _clienteService.UpdateCliente(id, model);
-                if (cliente == null) return BadRequest("Erro ao tentar atualizar o cliente.");
+                if (cliente == null) return NotFound("Erro ao tentar atualizar o cliente.");
 
                 return Ok(cliente);
             }

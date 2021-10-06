@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Clientes.Application.Interfaces;
 using Clientes.Domain.Models;
@@ -9,13 +11,12 @@ namespace Clientes.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]" + "s")]
-    public class BairroController : ControllerBase
+    public class CidadeController : ControllerBase
     {
-        private readonly IBairroService _bairroService;
-
-        public BairroController(IBairroService bairroService)
+        private readonly ICidadeService _cidadeService;
+        public CidadeController(ICidadeService cidadeService)
         {
-            _bairroService = bairroService;
+            _cidadeService = cidadeService;
         }
 
         [HttpGet]
@@ -23,15 +24,15 @@ namespace Clientes.API.Controllers
         {   
             try
             {
-                 var bairros = await _bairroService.GetAllBairrosAsync();
-                if (bairros == null) return NotFound("Nenhum bairro encontrado.");
+                var cidades = await _cidadeService.GetAllCidadesAsync();
+                if (cidades == null) return NotFound("Nenhuma cidade encontrada.");
 
-                return Ok(bairros);
+                return Ok(cidades);
             }
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar recuperar bairros. Erro: {ex.Message}");                
+                    $"Erro ao tentar recuperar cidades. Erro: {ex.Message}");                
             }
         }
 
@@ -40,15 +41,15 @@ namespace Clientes.API.Controllers
         {
             try
             {
-                 var bairro = await _bairroService.GetBairroByIdAsync(id);
-                 if (bairro == null) return NotFound("Nenhum bairro encontrado.");
+                 var cidade = await _cidadeService.GetCidadeByIdAsync(id);
+                 if (cidade == null) return NotFound("Nenhuma cidade encontrada.");
 
-                 return Ok(bairro);
+                 return Ok(cidade);
             }
             catch (Exception ex)
             {
                  return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar recuperar o bairro. Erro: {ex.Message}");
+                    $"Erro ao tentar recuperar cidades. Erro: {ex.Message}");
             }
         }
 
@@ -57,10 +58,10 @@ namespace Clientes.API.Controllers
         {
             try
             {
-                 var bairro = await _bairroService.GetAllBairrosByNomeAsync(nome);
-                 if (bairro == null) return NotFound("Nenhum bairro encontrado.");
+                 var cidades = await _cidadeService.GetAllCidadesByNomeAsync(nome);
+                 if (cidades == null) return NotFound("Nenhuma cidade encontrada.");
 
-                 return Ok(bairro);
+                 return Ok(cidades);
             }
             catch (Exception ex)
             {
@@ -70,14 +71,14 @@ namespace Clientes.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBairro(Bairro model)
+        public async Task<IActionResult> AddCidade(Cidade model)
         {
             try
             {
-                var bairro = await _bairroService.AddBairro(model);
-                if (bairro == null) return BadRequest("Erro ao tentar adicionar o bairro.");
+                var cidade = await _cidadeService.AddCidade(model);
+                if (cidade == null) return BadRequest("Erro ao tentar adicionar a cidade.");
 
-                return Created("", bairro);
+                return Created("", cidade);
             }
             catch (System.Exception ex)
             {
@@ -87,14 +88,14 @@ namespace Clientes.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBairro(int id, Bairro model)
+        public async Task<IActionResult> UpdateCidade(int id, Cidade model)
         {
             try
             {
-                var bairro = await _bairroService.UpdateBairro(id, model);
-                if (bairro == null) return NotFound("Erro ao tentar atualizar o bairro. Bairro inexistente.");
+                var cidade = await _cidadeService.UpdateCidade(id, model);
+                if (cidade == null) return NotFound("Erro ao tentar atualizar a cidade. Cidade inexistente.");
 
-                return Ok(bairro);
+                return Ok(cidade);
             }
             catch (Exception ex)
             {
@@ -108,9 +109,9 @@ namespace Clientes.API.Controllers
         {
             try
             {                  
-                 return await _bairroService.DeleteBairro(id) ?
+                 return await _cidadeService.DeleteCidade(id) ?
                     NoContent() :
-                    NotFound("Bairro não encontrado.");
+                    NotFound("Cidade não encontrada.");
             }
             catch (Exception ex)
             {
@@ -118,6 +119,5 @@ namespace Clientes.API.Controllers
                     $"Erro ao tentar deletar. Erro: {ex.Message}");
             }
         }
-
     }
 }

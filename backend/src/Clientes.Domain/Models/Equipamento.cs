@@ -14,6 +14,7 @@ namespace Clientes.Domain.Models
         
         public string Modelo { get; set; }
         public string NumeroSerie { get; set; }
+        public string ServiceTag { get; set; }
         public DateTime DataCadastro { get; set; }
 
         public int? ClienteId { get; set; }

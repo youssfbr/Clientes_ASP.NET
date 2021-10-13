@@ -81,6 +81,7 @@ namespace Clientes.Persistence.Context
             modelBuilder.Entity<Equipamento>().HasOne(e => e.EquipamentoMarca);
             modelBuilder.Entity<Equipamento>().Property(e => e.Modelo).HasMaxLength(20);
             modelBuilder.Entity<Equipamento>().Property(e => e.NumeroSerie).HasMaxLength(30);
+            modelBuilder.Entity<Equipamento>().Property(e => e.ServiceTag).HasMaxLength(30);
             modelBuilder.Entity<Equipamento>().HasOne(e => e.Cliente);
             modelBuilder.Entity<Equipamento>().Property(e => e.Observacao).HasMaxLength(255);
         }

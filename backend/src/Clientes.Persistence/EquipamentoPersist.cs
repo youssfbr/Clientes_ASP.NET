@@ -32,7 +32,12 @@ namespace Clientes.Persistence
 
         public async Task<Equipamento[]> GetAllEquipamentosByModeloAsync(string modelo)
         {
-            IQueryable<Equipamento> query = _context.Equipamentos;
+            IQueryable<Equipamento> query = _context.Equipamentos
+                .Include(e => e.EquipamentoTipo)
+                .Include(e => e.EquipamentoMarca)
+                .Include(e => e.Cliente)
+                .ThenInclude(e => e.Telefones)
+                .ThenInclude(e => e.TelefoneTipo);
 
             query = query.AsNoTracking()
                          .OrderBy(c => c.Id)
@@ -44,7 +49,12 @@ namespace Clientes.Persistence
 
         public async Task<Equipamento> GetEquipamentoByNumeroSerieAsync(string numeroSerie)
         {
-            IQueryable<Equipamento> query = _context.Equipamentos;
+            IQueryable<Equipamento> query = _context.Equipamentos
+                .Include(e => e.EquipamentoTipo)
+                .Include(e => e.EquipamentoMarca)
+                .Include(e => e.Cliente)
+                .ThenInclude(e => e.Telefones)
+                .ThenInclude(e => e.TelefoneTipo);
 
             query = query.AsNoTracking()
                          .OrderBy(c => c.Id)
@@ -56,7 +66,12 @@ namespace Clientes.Persistence
 
         public async Task<Equipamento> GetEquipamentoByIdAsync(int EquipamentoId)
         {
-               IQueryable<Equipamento> query = _context.Equipamentos;
+            IQueryable<Equipamento> query = _context.Equipamentos
+                .Include(e => e.EquipamentoTipo)
+                .Include(e => e.EquipamentoMarca)
+                .Include(e => e.Cliente)
+                .ThenInclude(e => e.Telefones)
+                .ThenInclude(e => e.TelefoneTipo);
 
             query = query.AsNoTracking()
                          .OrderBy(e => e.Id)

@@ -23,7 +23,7 @@ namespace Clientes.Application
                 _geralPersist.Add<Cidade>(model);
                  if (await _geralPersist.SaveChangesAsync()) 
                 {
-                    return await _cidadePersist.GetCidadeById(model.Id);
+                    return await _cidadePersist.GetCidadeByIdAsync(model.Id);
                 }
                 return null;
             }
@@ -37,7 +37,7 @@ namespace Clientes.Application
         {
             try
             {
-                var cidade = await _cidadePersist.GetCidadeById(id);
+                var cidade = await _cidadePersist.GetCidadeByIdAsync(id);
                 if (cidade == null) return null; 
 
                 model.Id = cidade.Id;                
@@ -45,7 +45,7 @@ namespace Clientes.Application
                 _geralPersist.Update(model);
                 if (await _geralPersist.SaveChangesAsync()) 
                 {
-                    return await _cidadePersist.GetCidadeById(model.Id);
+                    return await _cidadePersist.GetCidadeByIdAsync(model.Id);
                 }
                 return null;
             }
@@ -59,7 +59,7 @@ namespace Clientes.Application
         {
             try
             {
-                var cidade = await _cidadePersist.GetCidadeById(id);
+                var cidade = await _cidadePersist.GetCidadeByIdAsync(id);
                 if (cidade == null) return false;
                 
                 _geralPersist.Delete<Cidade>(cidade);
@@ -91,7 +91,7 @@ namespace Clientes.Application
         {
             try
             {
-                var cidades = await _cidadePersist.GetAllCidadesByNome(nome);
+                var cidades = await _cidadePersist.GetAllCidadesByNomeAsync(nome);
                 if (cidades == null) return null;
 
                 return cidades;
@@ -106,7 +106,7 @@ namespace Clientes.Application
         {
              try
             {
-                var cidade = await _cidadePersist.GetCidadeById(id);
+                var cidade = await _cidadePersist.GetCidadeByIdAsync(id);
                 if (cidade == null) return null;
 
                 return cidade;

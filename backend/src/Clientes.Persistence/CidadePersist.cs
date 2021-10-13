@@ -26,7 +26,7 @@ namespace Clientes.Persistence
             return await query.ToArrayAsync();
         }
 
-        public async Task<Cidade[]> GetAllCidadesByNome(string nome)
+        public async Task<Cidade[]> GetAllCidadesByNomeAsync(string nome)
         {
             IQueryable<Cidade> query = _context.Cidades;
 
@@ -38,7 +38,7 @@ namespace Clientes.Persistence
             return await query.ToArrayAsync();
         }
 
-        public async Task<Cidade> GetCidadeById(int CidadeId)
+        public async Task<Cidade> GetCidadeByIdAsync(int CidadeId)
         {
             IQueryable<Cidade> query = _context.Cidades;
 

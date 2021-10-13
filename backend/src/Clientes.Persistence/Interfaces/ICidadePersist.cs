@@ -6,7 +6,7 @@ namespace Clientes.Persistence.Interfaces
     public interface ICidadePersist
     {   
         Task<Cidade[]> GetAllCidadesAsync();
-        Task<Cidade[]> GetAllCidadesByNome(string nome);
-        Task<Cidade> GetCidadeById(int BairroId);
+        Task<Cidade[]> GetAllCidadesByNomeAsync(string nome);
+        Task<Cidade> GetCidadeByIdAsync(int BairroId);
     }
 }

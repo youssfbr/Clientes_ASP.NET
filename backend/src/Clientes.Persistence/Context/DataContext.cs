@@ -13,13 +13,11 @@ namespace Clientes.Persistence.Context
         public DbSet<Cidade> Cidades { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<EquipamentoTipo> EquipamentosTipos { get; set; }
-        public DbSet<EquipamentoMarca> EquipamentosMarcas { get; set; }
-   /*     
-        public DbSet<Equipamento> Equipamentos { get; set; }*/
+        public DbSet<EquipamentoMarca> EquipamentosMarcas { get; set; }        
+        public DbSet<Equipamento> Equipamentos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            
+        {            
             modelBuilder.Entity<Cliente>()
                 .HasMany(c => c.Telefones)
                 .WithOne(t => t.Cliente)
@@ -76,17 +74,15 @@ namespace Clientes.Persistence.Context
             modelBuilder.Entity<EquipamentoMarca>().HasKey(et => et.Id);    
             modelBuilder.Entity<EquipamentoMarca>().Property(et => et.Marca).HasMaxLength(20).IsRequired();
 
-
-     /* 
-
+            modelBuilder.Entity<Equipamento>().ToTable("Equipamento");
             modelBuilder.Entity<Equipamento>().HasKey(e => e.Id);    
             modelBuilder.Entity<Equipamento>().Property(e => e.EquipamentoTipoId).HasDefaultValue(1);
             modelBuilder.Entity<Equipamento>().HasOne(e => e.EquipamentoTipo);
             modelBuilder.Entity<Equipamento>().HasOne(e => e.EquipamentoMarca);
             modelBuilder.Entity<Equipamento>().Property(e => e.Modelo).HasMaxLength(20);
-            modelBuilder.Entity<Equipamento>().Property(e => e.NumeroSerie).HasMaxLength(20);
+            modelBuilder.Entity<Equipamento>().Property(e => e.NumeroSerie).HasMaxLength(30);
             modelBuilder.Entity<Equipamento>().HasOne(e => e.Cliente);
-            modelBuilder.Entity<Equipamento>().Property(e => e.Observacao).HasMaxLength(255);*/
+            modelBuilder.Entity<Equipamento>().Property(e => e.Observacao).HasMaxLength(255);
         }
     }
 }

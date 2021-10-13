@@ -44,7 +44,12 @@ namespace Clientes.Persistence
             return await query.ToArrayAsync();
         }
 
-        public async Task<Endereco> GetEnderecoById(int id)
+        public Task<Endereco[]> GetAllEnderecosByNomeAsync(string nome)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<Endereco> GetEnderecoByIdAsync(int id)
         {
             IQueryable<Endereco> query = _context.Enderecos
                 .Include(e => e.Bairro)
@@ -57,6 +62,6 @@ namespace Clientes.Persistence
 
             return await query.FirstOrDefaultAsync();
         }
-
+        
     }
 }

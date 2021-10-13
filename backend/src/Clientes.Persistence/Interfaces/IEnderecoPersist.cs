@@ -6,7 +6,7 @@ namespace Clientes.Persistence.Interfaces
     public interface IEnderecoPersist
     {
         Task<Endereco[]> GetAllEnderecosAsync();
-        Task<Endereco[]> GetAllEnderecosByNome(string nome);
-        Task<Endereco> GetEnderecoById(int EnderecoId);
+        Task<Endereco[]> GetAllEnderecosByNomeAsync(string nome);
+        Task<Endereco> GetEnderecoByIdAsync(int EnderecoId);
     }
 }

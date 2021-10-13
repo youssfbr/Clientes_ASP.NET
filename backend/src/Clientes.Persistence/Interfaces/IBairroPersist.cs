@@ -6,7 +6,7 @@ namespace Clientes.Persistence.Interfaces
     public interface IBairroPersist
     {
         Task<Bairro[]> GetAllBairrosAsync();
-        Task<Bairro[]> GetAllBairrosByNome(string nome);
-        Task<Bairro> GetBairroById(int BairroId);
+        Task<Bairro[]> GetAllBairrosByNomeAsync(string nome);
+        Task<Bairro> GetBairroByIdAsync(int BairroId);
     }
 }

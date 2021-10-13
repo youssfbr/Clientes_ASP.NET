@@ -25,7 +25,7 @@ namespace Clientes.Application
                  _geralPersist.Add<Endereco>(model);
                  if (await _geralPersist.SaveChangesAsync()) 
                 {
-                    return await _enderecoPersist.GetEnderecoById(model.Id);
+                    return await _enderecoPersist.GetEnderecoByIdAsync(model.Id);
                 }
                 return null;
             }
@@ -39,7 +39,7 @@ namespace Clientes.Application
         {
             try
             {
-                var endereco = await _enderecoPersist.GetEnderecoById(id);
+                var endereco = await _enderecoPersist.GetEnderecoByIdAsync(id);
                 if (endereco == null) return null; 
 
                 model.Id = endereco.Id;                
@@ -47,7 +47,7 @@ namespace Clientes.Application
                 _geralPersist.Update(model);
                 if (await _geralPersist.SaveChangesAsync()) 
                 {
-                    return await _enderecoPersist.GetEnderecoById(model.Id);
+                    return await _enderecoPersist.GetEnderecoByIdAsync(model.Id);
                 }
                 return null;
             }
@@ -61,7 +61,7 @@ namespace Clientes.Application
         {
             try
             {
-                var endereco = await _enderecoPersist.GetEnderecoById(id);
+                var endereco = await _enderecoPersist.GetEnderecoByIdAsync(id);
                 if (endereco == null) return false;
               
                 _geralPersist.Delete<Endereco>(endereco);
@@ -93,7 +93,7 @@ namespace Clientes.Application
         {
             try
             {
-                 var enderecos = await _enderecoPersist.GetAllEnderecosByNome(nome);
+                 var enderecos = await _enderecoPersist.GetAllEnderecosByNomeAsync(nome);
                  if (enderecos == null) return null;
 
                  return enderecos;
@@ -108,7 +108,7 @@ namespace Clientes.Application
         {
             try
             {
-                 var endereco = await _enderecoPersist.GetEnderecoById(id);
+                 var endereco = await _enderecoPersist.GetEnderecoByIdAsync(id);
                  if (endereco == null) return null;
 
                  return endereco;

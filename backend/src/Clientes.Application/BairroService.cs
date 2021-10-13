@@ -21,9 +21,10 @@ namespace Clientes.Application
             try
             {
                  _geralPersist.Add<Bairro>(model);
+
                  if (await _geralPersist.SaveChangesAsync()) 
                 {
-                    return await _bairroPersist.GetBairroById(model.Id);
+                    return await _bairroPersist.GetBairroByIdAsync(model.Id);
                 }
                 return null;
             }
@@ -33,19 +34,20 @@ namespace Clientes.Application
             }
         }
 
-        public async Task<Bairro> UpdateBairro(int bairroId, Bairro model)
+        public async Task<Bairro> UpdateBairro(int id, Bairro model)
         {
             try
             {
-                var bairro = await _bairroPersist.GetBairroById(bairroId);
+                var bairro = await _bairroPersist.GetBairroByIdAsync(id);
                 if (bairro == null) return null; 
 
                 model.Id = bairro.Id;                
 
                 _geralPersist.Update(model);
+                
                 if (await _geralPersist.SaveChangesAsync()) 
                 {
-                    return await _bairroPersist.GetBairroById(model.Id);
+                    return await _bairroPersist.GetBairroByIdAsync(model.Id);
                 }
                 return null;
             }
@@ -59,7 +61,7 @@ namespace Clientes.Application
         {
             try
             {
-                var bairro = await _bairroPersist.GetBairroById(id);
+                var bairro = await _bairroPersist.GetBairroByIdAsync(id);
                 if (bairro == null) return false;
               
                 _geralPersist.Delete<Bairro>(bairro);
@@ -91,7 +93,7 @@ namespace Clientes.Application
         {
             try
             {
-                 var bairros = await _bairroPersist.GetAllBairrosByNome(nome);
+                 var bairros = await _bairroPersist.GetAllBairrosByNomeAsync(nome);
                  if (bairros == null) return null;
 
                  return bairros;
@@ -102,11 +104,11 @@ namespace Clientes.Application
             }
         }
 
-        public async Task<Bairro> GetBairroByIdAsync(int bairroId)
+        public async Task<Bairro> GetBairroByIdAsync(int id)
         {
             try
             {
-                 var bairro = await _bairroPersist.GetBairroById(bairroId);
+                 var bairro = await _bairroPersist.GetBairroByIdAsync(id);
                  if (bairro == null) return null;
 
                  return bairro;

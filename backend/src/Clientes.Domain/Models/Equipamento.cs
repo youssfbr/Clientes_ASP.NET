@@ -5,10 +5,13 @@ namespace Clientes.Domain.Models
     public class Equipamento
     {
         public int Id { get; set; }
-        public TipoAparelho TipoAparelhoId { get; set; }
-        public TipoAparelho TipoAparelho { get; set; }
-        public MarcaAparelho MarcaAparelhoId { get; set; }
-        public MarcaAparelho MarcaAparelho { get; set; }
+
+        public int? EquipamentoTipoId { get; set; }
+        public EquipamentoTipo EquipamentoTipo { get; set; }
+        
+        public int? EquipamentoMarcaId { get; set; }
+        public EquipamentoMarca EquipamentoMarca { get; set; }
+        
         public string Modelo { get; set; }
         public string NumeroSerie { get; set; }
         public DateTime DataCadastro { get; set; }

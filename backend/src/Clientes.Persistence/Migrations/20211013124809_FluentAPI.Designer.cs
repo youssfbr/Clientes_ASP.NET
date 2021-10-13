@@ -4,14 +4,16 @@ using Clientes.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Clientes.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211013124809_FluentAPI")]
+    partial class FluentAPI
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,6 +85,9 @@ namespace Clientes.Persistence.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("Telefone")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Clientes");
@@ -139,40 +144,6 @@ namespace Clientes.Persistence.Migrations
                     b.ToTable("Enderecos");
                 });
 
-            modelBuilder.Entity("Clientes.Domain.Models.EquipamentoMarca", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Marca")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EquipamentosMarcas");
-                });
-
-            modelBuilder.Entity("Clientes.Domain.Models.EquipamentoTipo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EquipamentosTipos");
-                });
-
             modelBuilder.Entity("Clientes.Domain.Models.Telefone", b =>
                 {
                     b.Property<int>("Id")
@@ -184,25 +155,19 @@ namespace Clientes.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Numero")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TelefoneTipoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
+                    b.Property<int?>("TipoAparelhoId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
 
-                    b.HasIndex("TelefoneTipoId");
-
                     b.ToTable("Telefones");
                 });
 
-            modelBuilder.Entity("Clientes.Domain.Models.TelefoneTipo", b =>
+            modelBuilder.Entity("Clientes.Domain.Models.TipoAparelho", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -210,13 +175,11 @@ namespace Clientes.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TelefoneTipo");
+                    b.ToTable("TiposAparelhos");
                 });
 
             modelBuilder.Entity("Clientes.Domain.Models.Endereco", b =>
@@ -248,13 +211,7 @@ namespace Clientes.Persistence.Migrations
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Clientes.Domain.Models.TelefoneTipo", "TelefoneTipo")
-                        .WithMany()
-                        .HasForeignKey("TelefoneTipoId");
-
                     b.Navigation("Cliente");
-
-                    b.Navigation("TelefoneTipo");
                 });
 
             modelBuilder.Entity("Clientes.Domain.Models.Cliente", b =>

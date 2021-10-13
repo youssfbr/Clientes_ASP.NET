@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Clientes.Application.Interfaces;
 using Clientes.Domain.Models;
@@ -6,24 +8,24 @@ using Clientes.Persistence.Interfaces;
 
 namespace Clientes.Application
 {
-    public class BairroService : IBairroService
+    public class EnderecoService : IEnderecoService
     {
         private readonly IGeralPersist _geralPersist;
-        private readonly IBairroPersist _bairroPersist;
+        private readonly IEnderecoPersist _enderecoPersist;
 
-        public BairroService(IGeralPersist geralPersist, IBairroPersist bairroPersist)
+        public EnderecoService(IGeralPersist geralPersist, IEnderecoPersist enderecoPersist)
         {
             _geralPersist = geralPersist;
-            _bairroPersist = bairroPersist;
+            _enderecoPersist = enderecoPersist;
         }
-        public async Task<Bairro> AddBairro(Bairro model)
+        public async Task<Endereco> AddEndereco(Endereco model)
         {
             try
             {
-                 _geralPersist.Add<Bairro>(model);
+                 _geralPersist.Add<Endereco>(model);
                  if (await _geralPersist.SaveChangesAsync()) 
                 {
-                    return await _bairroPersist.GetBairroById(model.Id);
+                    return await _enderecoPersist.GetEnderecoById(model.Id);
                 }
                 return null;
             }
@@ -33,19 +35,19 @@ namespace Clientes.Application
             }
         }
 
-        public async Task<Bairro> UpdateBairro(int bairroId, Bairro model)
+        public async Task<Endereco> UpdateEndereco(int id, Endereco model)
         {
             try
             {
-                var bairro = await _bairroPersist.GetBairroById(bairroId);
-                if (bairro == null) return null; 
+                var endereco = await _enderecoPersist.GetEnderecoById(id);
+                if (endereco == null) return null; 
 
-                model.Id = bairro.Id;                
+                model.Id = endereco.Id;                
 
                 _geralPersist.Update(model);
                 if (await _geralPersist.SaveChangesAsync()) 
                 {
-                    return await _bairroPersist.GetBairroById(model.Id);
+                    return await _enderecoPersist.GetEnderecoById(model.Id);
                 }
                 return null;
             }
@@ -55,14 +57,14 @@ namespace Clientes.Application
             }
         }
 
-        public async Task<Boolean> DeleteBairro(int id)
+        public async Task<bool> DeleteEndereco(int id)
         {
             try
             {
-                var bairro = await _bairroPersist.GetBairroById(id);
-                if (bairro == null) return false;
+                var endereco = await _enderecoPersist.GetEnderecoById(id);
+                if (endereco == null) return false;
               
-                _geralPersist.Delete<Bairro>(bairro);
+                _geralPersist.Delete<Endereco>(endereco);
 
                 return await _geralPersist.SaveChangesAsync();
             }
@@ -72,14 +74,14 @@ namespace Clientes.Application
             }
         }
 
-        public async Task<Bairro[]> GetAllBairrosAsync()
+        public async Task<Endereco[]> GetAllEnderecosAsync()
         {
             try
             {
-                var bairros = await _bairroPersist.GetAllBairrosAsync();
-                if (bairros == null) return null;
+                var enderecos = await _enderecoPersist.GetAllEnderecosAsync();
+                if (enderecos == null) return null;
 
-                return bairros;
+                return enderecos;
             }
             catch (Exception ex)
             {
@@ -87,14 +89,14 @@ namespace Clientes.Application
             }
         }
 
-        public async Task<Bairro[]> GetAllBairrosByNomeAsync(string nome)
+        public async Task<Endereco[]> GetAllEnderecosByNomeAsync(string nome)
         {
             try
             {
-                 var bairros = await _bairroPersist.GetAllBairrosByNome(nome);
-                 if (bairros == null) return null;
+                 var enderecos = await _enderecoPersist.GetAllEnderecosByNome(nome);
+                 if (enderecos == null) return null;
 
-                 return bairros;
+                 return enderecos;
             }
             catch (Exception ex)
             {                
@@ -102,20 +104,21 @@ namespace Clientes.Application
             }
         }
 
-        public async Task<Bairro> GetBairroByIdAsync(int bairroId)
+        public async Task<Endereco> GetEnderecoByIdAsync(int id)
         {
             try
             {
-                 var bairro = await _bairroPersist.GetBairroById(bairroId);
-                 if (bairro == null) return null;
+                 var endereco = await _enderecoPersist.GetEnderecoById(id);
+                 if (endereco == null) return null;
 
-                 return bairro;
+                 return endereco;
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);                  
             }
         }
+
         
     }
 }

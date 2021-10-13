@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Clientes.Application.Interfaces;
 using Clientes.Domain.Models;
@@ -9,13 +11,13 @@ namespace Clientes.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]" + "s")]
-    public class BairroController : ControllerBase
+    public class EnderecoController : ControllerBase
     {
-        private readonly IBairroService _bairroService;
+        private readonly IEnderecoService _enderecoService;
 
-        public BairroController(IBairroService bairroService)
+        public EnderecoController(IEnderecoService enderecoService)
         {
-            _bairroService = bairroService;
+            _enderecoService = enderecoService;
         }
 
         [HttpGet]
@@ -23,15 +25,15 @@ namespace Clientes.API.Controllers
         {   
             try
             {
-                 var bairros = await _bairroService.GetAllBairrosAsync();
-                if (bairros == null) return NotFound("Nenhum bairro encontrado.");
+                 var enderecos = await _enderecoService.GetAllEnderecosAsync();
+                if (enderecos == null) return NotFound("Nenhum endereço encontrado.");
 
-                return Ok(bairros);
+                return Ok(enderecos);
             }
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar recuperar bairros. Erro: {ex.Message}");                
+                    $"Erro ao tentar recuperar endereco. Erro: {ex.Message}");                
             }
         }
 
@@ -40,15 +42,15 @@ namespace Clientes.API.Controllers
         {
             try
             {
-                 var bairro = await _bairroService.GetBairroByIdAsync(id);
-                 if (bairro == null) return NotFound("Nenhum bairro encontrado.");
+                 var endereco = await _enderecoService.GetEnderecoByIdAsync(id);
+                 if (endereco == null) return NotFound("Nenhum endereco encontrado.");
 
-                 return Ok(bairro);
+                 return Ok(endereco);
             }
             catch (Exception ex)
             {
                  return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar recuperar o bairro. Erro: {ex.Message}");
+                    $"Erro ao tentar recuperar o endereco. Erro: {ex.Message}");
             }
         }
 
@@ -57,27 +59,27 @@ namespace Clientes.API.Controllers
         {
             try
             {
-                 var bairro = await _bairroService.GetAllBairrosByNomeAsync(nome);
-                 if (bairro == null) return NotFound("Nenhum bairro encontrado.");
+                 var endereco = await _enderecoService.GetAllEnderecosByNomeAsync(nome);
+                 if (endereco == null) return NotFound("Nenhum endereco encontrado.");
 
-                 return Ok(bairro);
+                 return Ok(endereco);
             }
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar recuperar bairros. Erro: {ex.Message}");
+                    $"Erro ao tentar recuperar enderecos. Erro: {ex.Message}");
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBairro(Bairro model)
+        public async Task<IActionResult> AddEndereco(Endereco model)
         {
             try
             {
-                var bairro = await _bairroService.AddBairro(model);
-                if (bairro == null) return BadRequest("Erro ao tentar adicionar o bairro.");
+                var endereco = await _enderecoService.AddEndereco(model);
+                if (endereco == null) return BadRequest("Erro ao tentar adicionar o endereco.");
 
-                return Created("", bairro);
+                return Created("", endereco);
             }
             catch (Exception ex)
             {
@@ -87,14 +89,14 @@ namespace Clientes.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBairro(int id, Bairro model)
+        public async Task<IActionResult> UpdateEndereco(int id, Endereco model)
         {
             try
             {
-                var bairro = await _bairroService.UpdateBairro(id, model);
-                if (bairro == null) return NotFound("Erro ao tentar atualizar o bairro. Bairro inexistente.");
+                var endereco = await _enderecoService.UpdateEndereco(id, model);
+                if (endereco == null) return NotFound("Erro ao tentar atualizar o endereco. Endereco inexistente.");
 
-                return Ok(bairro);
+                return Ok(endereco);
             }
             catch (Exception ex)
             {
@@ -108,9 +110,9 @@ namespace Clientes.API.Controllers
         {
             try
             {                  
-                 return await _bairroService.DeleteBairro(id) ?
+                 return await _enderecoService.DeleteEndereco(id) ?
                     NoContent() :
-                    NotFound("Bairro não encontrado.");
+                    NotFound("endereco não encontrado.");
             }
             catch (Exception ex)
             {

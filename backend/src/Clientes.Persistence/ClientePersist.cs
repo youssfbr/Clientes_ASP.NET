@@ -20,8 +20,10 @@ namespace Clientes.Persistence
         public async Task<Cliente[]> GetAllClientesAsync()
         {
             IQueryable<Cliente> query = _context.Clientes
-                .Include(c => c.Telefones);
-                //.Include(c => c.Enderecos);
+                .Include(c => c.Telefones).ThenInclude(t => t.TelefoneTipo)
+                .Include(c => c.Endereco)
+                .Include(c => c.Endereco.Bairro)
+                .Include(c => c.Endereco.Cidade);
 
             query = query
                         .AsNoTracking()
@@ -33,7 +35,10 @@ namespace Clientes.Persistence
         public async Task<Cliente[]> GetAllClientesByNomeAsync(string nome)
         {
             IQueryable<Cliente> query = _context.Clientes
-                .Include(c => c.Telefones);
+                .Include(c => c.Telefones).ThenInclude(t => t.TelefoneTipo)
+                .Include(c => c.Endereco)
+                .Include(c => c.Endereco.Bairro)
+                .Include(c => c.Endereco.Cidade);
 
             query = query.AsNoTracking()
                             .OrderBy(c => c.Id)
@@ -46,7 +51,11 @@ namespace Clientes.Persistence
         public async Task<Cliente> GetClienteByIdAsync(int ClienteId)
         {
             IQueryable<Cliente> query = _context.Clientes
-                .Include(c => c.Telefones);
+                .Include(c => c.Telefones)
+                .Include(c => c.Telefones).ThenInclude(t => t.TelefoneTipo)
+                .Include(c => c.Endereco)
+                .Include(c => c.Endereco.Bairro)
+                .Include(c => c.Endereco.Cidade);
 
             query = query.AsNoTracking()
                          .OrderBy(e => e.Id)

@@ -8,10 +8,11 @@ namespace Clientes.Persistence.Context
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Telefone> Telefones { get; set; }
-        public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Bairro> Bairros { get; set; }
         public DbSet<Cidade> Cidades { get; set; }
-        public DbSet<TipoAparelho> TiposAparelhos { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<EquipamentoTipo> EquipamentosTipos { get; set; }
+        public DbSet<EquipamentoMarca> EquipamentosMarcas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,6 +20,47 @@ namespace Clientes.Persistence.Context
                 .HasMany(c => c.Telefones)
                 .WithOne(t => t.Cliente)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            modelBuilder.Entity<Cliente>()
+                .HasOne(c => c.Endereco)
+                .WithOne(t => t.Cliente)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Cliente>().HasKey(c => c.Id);    
+            modelBuilder.Entity<Cliente>().Property(c => c.Nome).HasMaxLength(60).IsRequired();
+            modelBuilder.Entity<Cliente>().Property(c => c.Email).HasMaxLength(60);
+            modelBuilder.Entity<Cliente>().Property(c => c.CPF).HasMaxLength(11);
+            modelBuilder.Entity<Cliente>().Property(c => c.Observacao).HasMaxLength(255);
+
+            modelBuilder.Entity<TelefoneTipo>().HasKey(t => t.Id);    
+            modelBuilder.Entity<TelefoneTipo>().Property(t => t.Tipo).HasMaxLength(11).IsRequired();
+
+            modelBuilder.Entity<Telefone>().HasKey(t => t.Id);    
+            modelBuilder.Entity<Telefone>().Property(t => t.TelefoneTipoId).HasDefaultValue(1);
+            modelBuilder.Entity<Telefone>().Property(t => t.Numero).HasMaxLength(20).IsRequired();
+            modelBuilder.Entity<Telefone>().HasOne(t => t.Cliente);
+
+            modelBuilder.Entity<Bairro>().HasKey(b => b.Id);    
+            modelBuilder.Entity<Bairro>().Property(b => b.Nome).HasMaxLength(20).IsRequired();
+
+            modelBuilder.Entity<Cidade>().HasKey(c => c.Id);    
+            modelBuilder.Entity<Cidade>().Property(c => c.Nome).HasMaxLength(20).IsRequired();
+
+            modelBuilder.Entity<Endereco>().HasKey(e => e.Id);    
+            modelBuilder.Entity<Endereco>().Property(e => e.CEP).HasMaxLength(11);
+            modelBuilder.Entity<Endereco>().Property(e => e.Logradouro).HasMaxLength(11);
+            modelBuilder.Entity<Endereco>().Property(e => e.Nome).HasMaxLength(60).IsRequired();
+            modelBuilder.Entity<Endereco>().Property(e => e.Numero).HasMaxLength(11).IsRequired();
+            modelBuilder.Entity<Endereco>().Property(e => e.Complemento).HasMaxLength(60);
+            modelBuilder.Entity<Endereco>().HasOne(e => e.Bairro);
+            modelBuilder.Entity<Endereco>().HasOne(e => e.Cidade);
+            modelBuilder.Entity<Endereco>().HasOne(e => e.Cliente);
+
+            modelBuilder.Entity<EquipamentoTipo>().HasKey(t => t.Id);    
+            modelBuilder.Entity<EquipamentoTipo>().Property(t => t.Tipo).HasMaxLength(20).IsRequired();
+
+            modelBuilder.Entity<EquipamentoMarca>().HasKey(t => t.Id);    
+            modelBuilder.Entity<EquipamentoMarca>().Property(t => t.Marca).HasMaxLength(20).IsRequired();
         }
     }
 }

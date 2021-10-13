@@ -40,6 +40,8 @@ namespace Clientes.API
             services.AddScoped<IBairroPersist, BairroPersist>();
             services.AddScoped<ICidadeService, CidadeService>();
             services.AddScoped<ICidadePersist, CidadePersist>();
+            services.AddScoped<IEnderecoService, EnderecoService>();
+            services.AddScoped<IEnderecoPersist, EnderecoPersist>();
             
             services.AddCors();
             services.AddSwaggerGen(c =>

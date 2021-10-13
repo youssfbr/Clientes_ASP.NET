@@ -15,8 +15,10 @@ namespace Clientes.Domain.Models
         public string Modelo { get; set; }
         public string NumeroSerie { get; set; }
         public DateTime DataCadastro { get; set; }
+
         public int? ClienteId { get; set; }
         public Cliente Cliente { get; set; }
+        
         public string Observacao { get; set; }
     }
 }

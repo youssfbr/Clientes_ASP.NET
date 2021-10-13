@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Clientes.Persistence
 {
-    public class ClientePersist : IClientePersist
+    public class ClientePersist //: IClientePersist
     {
         private readonly DataContext _context;
 
@@ -16,7 +16,7 @@ namespace Clientes.Persistence
             _context = context;
             //_context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }   
-
+/*
         public async Task<Cliente[]> GetAllClientesAsync()
         {
             IQueryable<Cliente> query = _context.Clientes
@@ -62,7 +62,7 @@ namespace Clientes.Persistence
                          .Where(c => c.Id == ClienteId);
 
             return await query.FirstOrDefaultAsync();
-        }
+        }*/
 
     }
 }

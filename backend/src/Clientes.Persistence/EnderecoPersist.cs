@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Clientes.Persistence
 {
-    public class EnderecoPersist : IEnderecoPersist
+    public class EnderecoPersist //: IEnderecoPersist
     {
         private readonly DataContext _context;
         public EnderecoPersist(DataContext context)
         {
             _context = context;
 
-        }
+        }/*
         public async Task<Endereco[]> GetAllEnderecosAsync()
         {
             IQueryable<Endereco> query = _context.Enderecos
@@ -57,6 +57,6 @@ namespace Clientes.Persistence
 
             return await query.FirstOrDefaultAsync();
         }
-
+*/
     }
 }

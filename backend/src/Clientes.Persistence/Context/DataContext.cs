@@ -7,18 +7,20 @@ namespace Clientes.Persistence.Context
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<Cliente> Clientes { get; set; }
-       // public DbSet<Telefone> Telefones { get; set; }
         public DbSet<TelefoneTipo> TelefonesTipos { get; set; }
+        public DbSet<Telefone> Telefones { get; set; }
         public DbSet<Bairro> Bairros { get; set; }
         public DbSet<Cidade> Cidades { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<EquipamentoTipo> EquipamentosTipos { get; set; }
         public DbSet<EquipamentoMarca> EquipamentosMarcas { get; set; }
-   /*     public DbSet<Endereco> Enderecos { get; set; }
+   /*     
         public DbSet<Equipamento> Equipamentos { get; set; }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-   /*         modelBuilder.Entity<Cliente>()
+            
+            modelBuilder.Entity<Cliente>()
                 .HasMany(c => c.Telefones)
                 .WithOne(t => t.Cliente)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -26,7 +28,7 @@ namespace Clientes.Persistence.Context
             modelBuilder.Entity<Cliente>()
                 .HasOne(c => c.Endereco)
                 .WithOne(t => t.Cliente)
-                .OnDelete(DeleteBehavior.Cascade);*/
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Cliente>().ToTable("Cliente");
             modelBuilder.Entity<Cliente>().HasKey(c => c.Id);    
@@ -38,11 +40,12 @@ namespace Clientes.Persistence.Context
             modelBuilder.Entity<TelefoneTipo>().ToTable("TelefoneTipo");
             modelBuilder.Entity<TelefoneTipo>().HasKey(t => t.Id);    
             modelBuilder.Entity<TelefoneTipo>().Property(t => t.Tipo).HasMaxLength(11).IsRequired();
-
-          /*  modelBuilder.Entity<Telefone>().HasKey(t => t.Id);    
+            
+            modelBuilder.Entity<Telefone>().ToTable("Telefone");
+            modelBuilder.Entity<Telefone>().HasKey(t => t.Id);    
             modelBuilder.Entity<Telefone>().Property(t => t.TelefoneTipoId).HasDefaultValue(1);
             modelBuilder.Entity<Telefone>().Property(t => t.Numero).HasMaxLength(20).IsRequired();
-            modelBuilder.Entity<Telefone>().HasOne(t => t.Cliente);*/
+            modelBuilder.Entity<Telefone>().HasOne(t => t.Cliente);
 
             modelBuilder.Entity<Bairro>().ToTable("Bairro");
             modelBuilder.Entity<Bairro>().HasKey(b => b.Id);    
@@ -51,16 +54,19 @@ namespace Clientes.Persistence.Context
             modelBuilder.Entity<Cidade>().ToTable("Cidade");
             modelBuilder.Entity<Cidade>().HasKey(c => c.Id);    
             modelBuilder.Entity<Cidade>().Property(c => c.Nome).HasMaxLength(20).IsRequired();
-/*
+
+            modelBuilder.Entity<Endereco>().ToTable("Endereco");
             modelBuilder.Entity<Endereco>().HasKey(e => e.Id);    
             modelBuilder.Entity<Endereco>().Property(e => e.CEP).HasMaxLength(11);
             modelBuilder.Entity<Endereco>().Property(e => e.Logradouro).HasMaxLength(11);
             modelBuilder.Entity<Endereco>().Property(e => e.Nome).HasMaxLength(60).IsRequired();
             modelBuilder.Entity<Endereco>().Property(e => e.Numero).HasMaxLength(11).IsRequired();
             modelBuilder.Entity<Endereco>().Property(e => e.Complemento).HasMaxLength(60);
+            modelBuilder.Entity<Endereco>().Property(e => e.BairroId).HasDefaultValue(1);
+            modelBuilder.Entity<Endereco>().Property(e => e.CidadeId).HasDefaultValue(1);
             modelBuilder.Entity<Endereco>().HasOne(e => e.Bairro);
             modelBuilder.Entity<Endereco>().HasOne(e => e.Cidade);
-            modelBuilder.Entity<Endereco>().HasOne(e => e.Cliente);*/
+            modelBuilder.Entity<Endereco>().HasOne(e => e.Cliente);
 
             modelBuilder.Entity<EquipamentoTipo>().ToTable("EquipamentoTipo");
             modelBuilder.Entity<EquipamentoTipo>().HasKey(et => et.Id);    

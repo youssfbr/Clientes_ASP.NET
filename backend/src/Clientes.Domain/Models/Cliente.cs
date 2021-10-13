@@ -12,7 +12,7 @@ namespace Clientes.Domain.Models
         public DateTime? DataNascimento { get; set; }
         public DateTime? DataCadastro { get; set; }
         public string Observacao { get; set; }
-       // public IEnumerable<Telefone> Telefones { get; set; }        
-       // public Endereco Endereco { get; set; }        
+        public IEnumerable<Telefone> Telefones { get; set; }        
+        public Endereco Endereco { get; set; }        
     }
 }

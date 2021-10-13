@@ -4,14 +4,16 @@ using Clientes.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Clientes.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211013175042_Telefone")]
+    partial class Telefone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,61 +88,6 @@ namespace Clientes.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cliente");
-                });
-
-            modelBuilder.Entity("Clientes.Domain.Models.Endereco", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BairroId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
-
-                    b.Property<string>("CEP")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.Property<int?>("CidadeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
-
-                    b.Property<int?>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Complemento")
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("Logradouro")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("Numero")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BairroId");
-
-                    b.HasIndex("CidadeId");
-
-                    b.HasIndex("ClienteId")
-                        .IsUnique()
-                        .HasFilter("[ClienteId] IS NOT NULL");
-
-                    b.ToTable("Endereco");
                 });
 
             modelBuilder.Entity("Clientes.Domain.Models.EquipamentoMarca", b =>
@@ -223,34 +170,11 @@ namespace Clientes.Persistence.Migrations
                     b.ToTable("TelefoneTipo");
                 });
 
-            modelBuilder.Entity("Clientes.Domain.Models.Endereco", b =>
-                {
-                    b.HasOne("Clientes.Domain.Models.Bairro", "Bairro")
-                        .WithMany()
-                        .HasForeignKey("BairroId");
-
-                    b.HasOne("Clientes.Domain.Models.Cidade", "Cidade")
-                        .WithMany()
-                        .HasForeignKey("CidadeId");
-
-                    b.HasOne("Clientes.Domain.Models.Cliente", "Cliente")
-                        .WithOne("Endereco")
-                        .HasForeignKey("Clientes.Domain.Models.Endereco", "ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Bairro");
-
-                    b.Navigation("Cidade");
-
-                    b.Navigation("Cliente");
-                });
-
             modelBuilder.Entity("Clientes.Domain.Models.Telefone", b =>
                 {
                     b.HasOne("Clientes.Domain.Models.Cliente", "Cliente")
-                        .WithMany("Telefones")
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("ClienteId");
 
                     b.HasOne("Clientes.Domain.Models.TelefoneTipo", "TelefoneTipo")
                         .WithMany()
@@ -259,13 +183,6 @@ namespace Clientes.Persistence.Migrations
                     b.Navigation("Cliente");
 
                     b.Navigation("TelefoneTipo");
-                });
-
-            modelBuilder.Entity("Clientes.Domain.Models.Cliente", b =>
-                {
-                    b.Navigation("Endereco");
-
-                    b.Navigation("Telefones");
                 });
 #pragma warning restore 612, 618
         }

@@ -34,14 +34,14 @@ namespace Clientes.API
                     );
 
             services.AddScoped<IGeralPersist, GeralPersist>();
-        //    services.AddScoped<IClienteService, ClienteService>();
-         //   services.AddScoped<IClientePersist, ClientePersist>();
+            services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IClientePersist, ClientePersist>();
             services.AddScoped<IBairroService, BairroService>();
             services.AddScoped<IBairroPersist, BairroPersist>();
-         //   services.AddScoped<ICidadeService, CidadeService>();
-          //  services.AddScoped<ICidadePersist, CidadePersist>();
-        //    services.AddScoped<IEnderecoService, EnderecoService>();
-         //   services.AddScoped<IEnderecoPersist, EnderecoPersist>();
+            services.AddScoped<ICidadeService, CidadeService>();
+            services.AddScoped<ICidadePersist, CidadePersist>();
+            services.AddScoped<IEnderecoService, EnderecoService>();
+            services.AddScoped<IEnderecoPersist, EnderecoPersist>();
             
             services.AddCors();
             services.AddSwaggerGen(c =>

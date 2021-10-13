@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Clientes.Persistence
 {
-    public class CidadePersist //: ICidadePersist
+    public class CidadePersist : ICidadePersist
     {
         private readonly DataContext _context;
 
@@ -15,7 +15,7 @@ namespace Clientes.Persistence
         {
             _context = context;
         }
-/*
+
         public async Task<Cidade[]> GetAllCidadesAsync()
         {
             IQueryable<Cidade> query = _context.Cidades;
@@ -47,7 +47,7 @@ namespace Clientes.Persistence
                          .Where(c => c.Id == CidadeId);
 
             return await query.FirstOrDefaultAsync();
-        }  */
+        }  
 
     }
 }
